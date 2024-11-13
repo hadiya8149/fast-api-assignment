@@ -4,7 +4,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
+from pydantic import BaseModel
 def hash_password(password: str):
     return pwd_context.hash(password)
 
@@ -51,4 +51,13 @@ def create_db_and_tables():
 
 
 # To declare a request body, you use Pydantic models with all their power and benefits.
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: str | None = None
 
